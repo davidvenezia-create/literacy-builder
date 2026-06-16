@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Literacy Builder</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .hero {
+      background: var(--navy);
+      color: var(--white);
+      padding: 4rem 2rem 3rem;
+      text-align: center;
+    }
+    .hero-tag {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #7EC8E3;
+      margin-bottom: 1rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      margin-bottom: 1rem;
+    }
+    .hero h1 span { color: #7EC8E3; }
+    .hero p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.78);
+      max-width: 520px;
+      margin: 0 auto 2rem;
+    }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-hero-main {
+      background: #7EC8E3;
+      color: var(--navy);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 0.75rem 1.8rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-hero-ghost {
+      background: transparent;
+      color: rgba(255,255,255,0.85);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      padding: 0.75rem 1.8rem;
+      border-radius: 8px;
+      border: 2px solid rgba(255,255,255,0.35);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    /* How it works strip */
+    .how-strip {
+      background: #f0f6fc;
+      border-bottom: 2px solid var(--gray-2);
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--navy);
+    }
+    .how-strip .arrow { color: var(--gray-3); font-size: 1.2rem; }
+    /* Steps grid */
+    .steps-section { max-width: 860px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+    .steps-section h2 {
+      text-align: center;
+      font-size: 1.6rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+    .steps-section .sub {
+      text-align: center;
+      color: var(--gray-4);
+      margin-bottom: 2.5rem;
+      font-size: 0.97rem;
+    }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.25rem;
+    }
+    .step-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.75rem 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      border-top: 4px solid var(--sky);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .step-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
+    .step-card.c1 { border-color: var(--sky); }
+    .step-card.c2 { border-color: var(--green); }
+    .step-card.c3 { border-color: var(--amber); }
+    .step-card.c4 { border-color: var(--purple); }
+    .step-card.c5 { border-color: var(--coral); }
+    .step-num {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 2.2rem;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      opacity: 0.15;
+    }
+    .step-card.c1 .step-num { color: var(--sky); opacity: 1; }
+    .step-card.c2 .step-num { color: var(--green); opacity: 1; }
+    .step-card.c3 .step-num { color: var(--amber); opacity: 1; }
+    .step-card.c4 .step-num { color: var(--purple); opacity: 1; }
+    .step-card.c5 .step-num { color: var(--coral); opacity: 1; }
+    .step-card .icon { font-size: 2rem; margin-bottom: 0.75rem; display: block; }
+    .step-card h3 { font-size: 1.1rem; color: var(--navy); margin-bottom: 0.4rem; }
+    .step-card p { font-size: 0.88rem; color: var(--gray-4); line-height: 1.55; margin-bottom: 1rem; }
+    .step-link {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--sky);
+    }
+    /* Tip box */
+    .tip-box {
+      max-width: 640px;
+      margin: 0 auto 3rem;
+      background: var(--amber-lt);
+      border-left: 4px solid var(--amber);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      font-size: 0.9rem;
+      color: #5a4200;
+    }
+    .tip-box strong { font-family: 'Nunito', sans-serif; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <nav id="site-nav"></nav>
+
+  <div class="hero">
+    <div class="hero-tag">Step-by-step phonics &amp; literacy</div>
+    <h1>Build your reading,<br><span>one sound at a time.</span></h1>
+    <p>Start with letters and sounds. Move to blending. Learn to break words apart. Go at your own pace.</p>
+    <div class="hero-btns">
+      <a class="btn-hero-main" href="activities/sounds.html">Start with Sounds →</a>
+      <a class="btn-hero-ghost" href="#steps">See all steps</a>
+    </div>
+  </div>
+
+  <div class="how-strip">
+    <span>🔤 Sounds</span>
+    <span class="arrow">→</span>
+    <span>🔗 Blending</span>
+    <span class="arrow">→</span>
+    <span>✂️ Syllables</span>
+    <span class="arrow">→</span>
+    <span>🧩 Patterns</span>
+    <span class="arrow">→</span>
+    <span>📖 Reading</span>
+  </div>
+
+  <div class="steps-section" id="steps">
+    <h2>Five steps to reading</h2>
+    <p class="sub">Each step builds on the one before. Start at step 1.</p>
+
+    <div class="tip-box">
+      <strong>💡 Tip:</strong> Every activity has a <strong>Watch first</strong> example before you try it yourself. You are never expected to guess.
+    </div>
+
+    <div class="steps-grid">
+      <a class="step-card c1" href="activities/sounds.html">
+        <span class="icon">🔤</span>
+        <div class="step-num">1</div>
+        <h3>Sound–Letter Match</h3>
+        <p>Every letter makes a sound. Tap letters to hear them. See example words and pictures.</p>
+        <span class="step-link">Go to Step 1 →</span>
+      </a>
+      <a class="step-card c2" href="activities/blending.html">
+        <span class="icon">🔗</span>
+        <div class="step-num">2</div>
+        <h3>Blending</h3>
+        <p>Push sounds together to make a word. Watch the sounds merge, then try it yourself.</p>
+        <span class="step-link">Go to Step 2 →</span>
+      </a>
+      <a class="step-card c3" href="activities/syllables.html">
+        <span class="icon">✂️</span>
+        <div class="step-num">3</div>
+        <h3>Syllables</h3>
+        <p>Big words have beats. Tap the beats in each word, then see how it breaks apart.</p>
+        <span class="step-link">Go to Step 3 →</span>
+      </a>
+      <a class="step-card c4" href="activities/patterns.html">
+        <span class="icon">🧩</span>
+        <div class="step-num">4</div>
+        <h3>Word Patterns</h3>
+        <p>Letters follow rules. Short vowels, long vowels, digraphs — sort words by their pattern.</p>
+        <span class="step-link">Go to Step 4 →</span>
+      </a>
+      <a class="step-card c5" href="activities/reading.html">
+        <span class="icon">📖</span>
+        <div class="step-num">5</div>
+        <h3>Reading in Context</h3>
+        <p>Use all your skills. Read short sentences with pictures. Tap any word to hear it.</p>
+        <span class="step-link">Go to Step 5 →</span>
+      </a>
+    </div>
+  </div>
+
+  <footer id="site-footer"></footer>
+  <script src="js/nav.js"></script>
+  <script>injectNav('');</script>
+</body>
+</html>
