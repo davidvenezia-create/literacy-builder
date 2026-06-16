@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step 4: Word Patterns – Literacy Builder</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* ── PATTERN DISPLAY ──────────────────── */
+    .pattern-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .pattern-tab {
+      background: var(--gray-1);
+      border: 2px solid var(--gray-2);
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.875rem;
+      cursor: pointer;
+      color: var(--navy);
+      transition: all 0.12s;
+    }
+    .pattern-tab:hover  { border-color: var(--purple); background: var(--purple-lt); }
+    .pattern-tab.active { border-color: var(--purple); background: var(--purple);    color: white; }
+
+    .pattern-explain {
+      background: var(--purple-lt);
+      border-left: 4px solid var(--purple);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .pattern-explain .rule {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--purple);
+      margin-bottom: 0.35rem;
+    }
+    .pattern-explain p {
+      font-size: 0.9rem;
+      color: #4a2060;
+    }
+    .example-strip {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .ex-chip {
+      background: white;
+      border: 2px solid var(--purple);
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--navy);
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+    .ex-chip:hover { background: var(--purple-lt); }
+    .ex-chip .vowel { color: var(--purple); }
+
+    /* ── SORT GAME ───────────────────────── */
+    .sort-intro {
+      text-align: center;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--navy);
+      margin-bottom: 1.25rem;
+    }
+    .sort-word-display {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 3rem;
+      text-align: center;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.04em;
+    }
+    .sort-bins {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 1.25rem 0;
+    }
+    .sort-bin {
+      border-radius: 12px;
+      padding: 1rem;
+      min-height: 80px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.15s;
+      text-align: center;
+    }
+    .sort-bin .bin-label {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+    }
+    .sort-bin .bin-example {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+    /* per-bin colors */
+    .bin-short-a { background: #FEF9E7; border-color: var(--amber); }
+    .bin-short-a .bin-label { color: #5a4200; }
+    .bin-short-a:hover { background: #faeeca; }
+    .bin-long-a  { background: var(--sky-lt); border-color: var(--sky); }
+    .bin-long-a .bin-label { color: #0c3d5c; }
+    .bin-long-a:hover  { background: #c0dff5; }
+    .bin-short-i { background: var(--green-lt); border-color: var(--green); }
+    .bin-short-i .bin-label { color: #0a3a1f; }
+    .bin-short-i:hover { background: #b3efcc; }
+    .bin-long-i  { background: var(--coral-lt); border-color: var(--coral); }
+    .bin-long-i .bin-label { color: #5c0a0a; }
+    .bin-long-i:hover  { background: #f5b9b3; }
+    .bin-digraph { background: var(--purple-lt); border-color: var(--purple); }
+    .bin-digraph .bin-label { color: #3a0a5c; }
+    .bin-digraph:hover { background: #e0c0f5; }
+
+    .sort-bin.flash-right { background: var(--green-lt) !important; border-color: var(--green) !important; }
+    .sort-bin.flash-wrong { background: var(--coral-lt) !important; border-color: var(--coral) !important; }
+  </style>
+</head>
+<body>
+  <nav id="site-nav"></nav>
+
+  <div class="page-hero">
+    <div class="step-badge">Step 4 of 5</div>
+    <h1>Word Patterns</h1>
+    <p>Letters follow rules. Learn the patterns, and you can read thousands of words.</p>
+  </div>
+
+  <div class="activity-wrap">
+
+    <!-- ACTIVITY 1: Pattern Guide -->
+    <div class="activity-card">
+      <h2>📋 Learn the pattern — then hear examples</h2>
+      <p class="instruction">Choose a pattern below. Read the rule. Tap any example word to hear it.</p>
+
+      <div class="pattern-tabs" id="pattern-tabs"></div>
+      <div class="pattern-explain" id="pattern-explain"></div>
+    </div>
+
+    <!-- ACTIVITY 2: Word Sort -->
+    <div class="activity-card">
+      <h2>🗂 Sort the words</h2>
+      <p class="instruction">Read the word. Which pattern does it follow? Tap the correct box.</p>
+
+      <div class="progress-row">
+        <div class="progress-bar"><div class="progress-fill" id="sort-progress" style="width:0%"></div></div>
+        <span class="progress-label" id="sort-count">0 / 10</span>
+      </div>
+
+      <div class="sort-intro">Where does this word belong?</div>
+      <button class="btn btn-sky" style="display:block;margin:0 auto 0.75rem;" onclick="playCurrentSort()">▶ Hear the word</button>
+      <div class="sort-word-display" id="sort-word-display"></div>
+
+      <div class="sort-bins" id="sort-bins"></div>
+      <div class="feedback" id="sort-feedback"></div>
+
+      <div style="text-align:center;margin-top:1.5rem;display:none;" id="sort-next-row">
+        <button class="btn btn-navy" onclick="nextSortWord()">Next word →</button>
+      </div>
+      <div style="text-align:center;margin-top:1.5rem;display:none;" id="sort-done">
+        <p style="font-family:'Nunito',sans-serif;font-weight:800;font-size:1.2rem;color:var(--green);margin-bottom:1rem;">🎉 Excellent! You sorted all the words.</p>
+        <a class="btn btn-green" href="reading.html">Next: Reading in Context →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer id="site-footer"></footer>
+  <script src="../js/nav.js"></script>
+  <script>
+    injectNav('patterns');
+
+    // ── PATTERN DATA ──────────────────────────────────────
+    const patterns = [
+      {
+        id: 'short-a',
+        name: 'Short A',
+        rule: 'Short A says "ah" — like the A in "cat".',
+        note: 'Listen for this sound in the middle of many short words.',
+        examples: [
+          { word:'cat', marked:'c<span class="vowel">a</span>t' },
+          { word:'bag', marked:'b<span class="vowel">a</span>g' },
+          { word:'map', marked:'m<span class="vowel">a</span>p' },
+          { word:'ran', marked:'r<span class="vowel">a</span>n' },
+        ]
+      },
+      {
+        id: 'long-a',
+        name: 'Long A',
+        rule: 'Long A says its name — "ay" — like the A in "cake".',
+        note: 'Long A often appears in the pattern consonant-A-consonant-E (c-a-k-e), or in pairs like AI or AY.',
+        examples: [
+          { word:'cake', marked:'c<span class="vowel">a</span>k<span class="vowel">e</span>' },
+          { word:'rain', marked:'r<span class="vowel">ai</span>n' },
+          { word:'play', marked:'pl<span class="vowel">ay</span>' },
+          { word:'name', marked:'n<span class="vowel">a</span>m<span class="vowel">e</span>' },
+        ]
+      },
+      {
+        id: 'short-i',
+        name: 'Short I',
+        rule: 'Short I says "ih" — like the I in "sit".',
+        note: 'This sound is quick and small, right in the middle of the word.',
+        examples: [
+          { word:'sit', marked:'s<span class="vowel">i</span>t' },
+          { word:'pin', marked:'p<span class="vowel">i</span>n' },
+          { word:'big', marked:'b<span class="vowel">i</span>g' },
+          { word:'flip', marked:'fl<span class="vowel">i</span>p' },
+        ]
+      },
+      {
+        id: 'long-i',
+        name: 'Long I',
+        rule: 'Long I says its name — "eye" — like the I in "bike".',
+        note: 'Long I often appears in the pattern consonant-I-consonant-E, or can be spelled -IGH or just Y.',
+        examples: [
+          { word:'bike', marked:'b<span class="vowel">i</span>k<span class="vowel">e</span>' },
+          { word:'night', marked:'n<span class="vowel">igh</span>t' },
+          { word:'fly', marked:'fl<span class="vowel">y</span>' },
+          { word:'mine', marked:'m<span class="vowel">i</span>n<span class="vowel">e</span>' },
+        ]
+      },
+      {
+        id: 'digraph',
+        name: 'Digraphs',
+        rule: 'Two letters together make one new sound.',
+        note: 'SH, CH, TH, and WH are digraphs. The two letters work as a team.',
+        examples: [
+          { word:'ship', marked:'<span class="vowel">sh</span>ip' },
+          { word:'chin', marked:'<span class="vowel">ch</span>in' },
+          { word:'then', marked:'<span class="vowel">th</span>en' },
+          { word:'when', marked:'<span class="vowel">wh</span>en' },
+        ]
+      },
+    ];
+
+    // ── PATTERN TABS ──────────────────────────────────────
+    let activePattern = 0;
+
+    function buildPatternTabs() {
+      const tabs = document.getElementById('pattern-tabs');
+      patterns.forEach((p, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'pattern-tab' + (i === 0 ? ' active' : '');
+        btn.textContent = p.name;
+        btn.addEventListener('click', () => {
+          activePattern = i;
+          document.querySelectorAll('.pattern-tab').forEach(t => t.classList.remove('active'));
+          btn.classList.add('active');
+          renderPatternExplain();
+        });
+        tabs.appendChild(btn);
+      });
+    }
+    buildPatternTabs();
+
+    function renderPatternExplain() {
+      const p = patterns[activePattern];
+      document.getElementById('pattern-explain').innerHTML = `
+        <div class="rule">${p.name}: ${p.rule}</div>
+        <p style="margin-bottom:0.75rem;">${p.note}</p>
+        <div class="example-strip">
+          ${p.examples.map(e => `<span class="ex-chip" onclick="speak('${e.word}')">${e.marked} 🔊</span>`).join('')}
+        </div>
+      `;
+    }
+    renderPatternExplain();
+
+    // ── SORT DATA ─────────────────────────────────────────
+    const sortItems = [
+      { word:'hat',   pattern:'short-a' },
+      { word:'lake',  pattern:'long-a'  },
+      { word:'ship',  pattern:'digraph' },
+      { word:'big',   pattern:'short-i' },
+      { word:'night', pattern:'long-i'  },
+      { word:'fan',   pattern:'short-a' },
+      { word:'child', pattern:'digraph' },
+      { word:'fly',   pattern:'long-i'  },
+      { word:'rain',  pattern:'long-a'  },
+      { word:'tip',   pattern:'short-i' },
+    ];
+
+    const bins = [
+      { id:'short-a', label:'Short A',  example:'"cat"',  css:'bin-short-a' },
+      { id:'long-a',  label:'Long A',   example:'"cake"', css:'bin-long-a'  },
+      { id:'short-i', label:'Short I',  example:'"sit"',  css:'bin-short-i' },
+      { id:'long-i',  label:'Long I',   example:'"bike"', css:'bin-long-i'  },
+      { id:'digraph', label:'Digraph',  example:'"ship"', css:'bin-digraph' },
+    ];
+
+    let sortIndex = 0, sortAnswered = false;
+
+    function renderBins() {
+      const container = document.getElementById('sort-bins');
+      container.innerHTML = '';
+      bins.forEach(b => {
+        const div = document.createElement('div');
+        div.className = 'sort-bin ' + b.css;
+        div.id = 'bin-' + b.id;
+        div.innerHTML = `<div class="bin-label">${b.label}</div><div class="bin-example">${b.example}</div>`;
+        div.addEventListener('click', () => checkSort(b.id));
+        container.appendChild(div);
+      });
+    }
+    renderBins();
+
+    function renderSortWord() {
+      sortAnswered = false;
+      document.getElementById('sort-word-display').textContent = sortItems[sortIndex].word.toUpperCase();
+      document.getElementById('sort-feedback').className = 'feedback';
+      document.getElementById('sort-next-row').style.display = 'none';
+      renderBins();
+      updateSortProgress();
+    }
+
+    function playCurrentSort() {
+      speak(sortItems[sortIndex].word, 0.8);
+    }
+
+    function checkSort(chosen) {
+      if (sortAnswered) return;
+      sortAnswered = true;
+      const item = sortItems[sortIndex];
+      const fb = document.getElementById('sort-feedback');
+      const chosenBin = document.getElementById('bin-' + chosen);
+      const correctBin = document.getElementById('bin-' + item.pattern);
+      const patLabel = bins.find(b => b.id === item.pattern).label;
+
+      if (chosen === item.pattern) {
+        chosenBin.classList.add('flash-right');
+        showFeedback(fb, 'correct', `✅ Yes! "${item.word}" is a ${patLabel} word.`);
+      } else {
+        chosenBin.classList.add('flash-wrong');
+        correctBin.classList.add('flash-right');
+        showFeedback(fb, 'incorrect', `Not quite. "${item.word}" belongs with ${patLabel} words.`);
+      }
+      updateSortProgress();
+      if (sortIndex < sortItems.length - 1) {
+        document.getElementById('sort-next-row').style.display = 'block';
+      } else {
+        setTimeout(() => {
+          document.getElementById('sort-next-row').style.display = 'none';
+          document.getElementById('sort-done').style.display = 'block';
+        }, 1000);
+      }
+    }
+
+    function nextSortWord() {
+      sortIndex++;
+      renderSortWord();
+    }
+
+    function updateSortProgress() {
+      const done = sortAnswered ? sortIndex + 1 : sortIndex;
+      document.getElementById('sort-progress').style.width = (done / sortItems.length * 100) + '%';
+      document.getElementById('sort-count').textContent = done + ' / ' + sortItems.length;
+    }
+
+    renderSortWord();
+  </script>
+</body>
+</html>
